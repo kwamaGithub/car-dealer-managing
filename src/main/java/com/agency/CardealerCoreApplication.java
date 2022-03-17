@@ -1,4 +1,4 @@
-package com.agency.cardealercore;
+package com.agency;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

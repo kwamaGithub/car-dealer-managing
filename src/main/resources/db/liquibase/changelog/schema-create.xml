@@ -7,7 +7,91 @@
     
     <property name="schema_name" value="manage"/>
     
+    <!-- START parameters ENTITY-->
+    <changeSet author="kwamaGithub(generated)" id="PARAMETERS-CREATE-UID001">
+        <createTable schemaName="${schema_name}" tableName="parameters">
+            <column name="code" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="kwamaGithub(generated)" id="PARAMETERS-PRIMARYKEY-UID001">
+        <addPrimaryKey schemaName="${schema_name}" columnNames="code" constraintName="parameters-code_pk" tableName="parameters"/>
+    </changeSet>
+    <!-- parameters ENTITY END-->
+    
+    <!-- START Paramters value ENTITY-->
+    <changeSet author="kwamaGithub(generated)" id="VALUES-CREATE-UID001">
+        <createTable schemaName="${schema_name}" tableName="values">
+            <column name="id" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(100)"/>
+            <column name="parameter_code" type="VARCHAR(100)"/>
+            <column name="value" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
     
     
+    <changeSet author="kwamaGithub(generated)" id="VALUES-PRIMARYKEY-UID001">
+        <addPrimaryKey schemaName="${schema_name}" columnNames="id" constraintName="values-id_pk" tableName="values"/>
+    </changeSet>
+    <changeSet author="kwamaGithub(generated)" id="VALUES-FORENGKEY-UID001">
+        <addForeignKeyConstraint baseTableSchemaName="${schema_name}" baseColumnNames="parameter_code" 
+                                 baseTableName="values" constraintName="values_param_forg_key" deferrable="false" 
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="code"
+                                 referencedTableName="parameters" referencedTableSchemaName="${schema_name}"/>
+    </changeSet>
+    <!-- Paramters value ENTITY  END-->
+    
+    <!--START DEALER ENTITY-->
+    <changeSet author="kwamaGithub(generated)" id="DEALER-CREATE-UID001">
+        <createTable schemaName="${schema_name}" tableName="dealer">
+            <column name="id" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="kwamaGithub(generated)" id="DEALER-PRIMARYKEY-UID001">
+        <addPrimaryKey schemaName="${schema_name}" columnNames="id" constraintName="dealer-id_pk" tableName="dealer"/>
+    </changeSet>
+    <!-- DEALER ENTITY END-->
+    
+    <!--START LISTING ENTITY-->
+    <changeSet author="kwamaGithub(generated)" id="LISTING-CREATE-UID001">
+        <createTable schemaName="${schema_name}" tableName="listing">
+            <column name="id" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dealer_id" type="VARCHAR(100)"/>
+            <column name="vehicle" type="VARCHAR(100)"/>
+            <column name="price" type="numeric(50, 2))"/>
+            <column name="create_at" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="state_id" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="kwamaGithub(generated)" id="LISTING-PRIMARYKEY-UID001">
+        <addPrimaryKey schemaName="${schema_name}" columnNames="id" constraintName="listing-id_pk" tableName="listing"/>
+    </changeSet>
+    
+    <changeSet author="kwamaGithub(generated)" id="LISTING-DEALER-FORENGKEY-UID001">
+        <addForeignKeyConstraint baseTableSchemaName="${schema_name}" baseColumnNames="dealer_id" 
+                                 baseTableName="listing" constraintName="listing_dealer_forg_key" deferrable="false" 
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="dealer" referencedTableSchemaName="${schema_name}"/>
+    </changeSet>
+    
+    <changeSet author="kwamaGithub(generated)" id="LISTING-STATE-FORENGKEY-UID001">
+        <addForeignKeyConstraint baseTableSchemaName="${schema_name}" baseColumnNames="state_id" 
+                                 baseTableName="listing" constraintName="listing_state_value_forg_key" deferrable="false" 
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="values" referencedTableSchemaName="${schema_name}"/>
+    </changeSet>
+    <!-- LISTING END-->
 </databaseChangeLog>
 
