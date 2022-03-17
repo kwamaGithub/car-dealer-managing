@@ -5,6 +5,7 @@
  */
 package com.agency.entity;
 
+import com.agency.entity.utils.ParameterValue;
 import com.agency.utils.AppConstant;
 import java.io.Serializable;
 import java.math.BigDecimal;

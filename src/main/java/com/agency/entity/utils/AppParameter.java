@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.agency.entity;
+package com.agency.entity.utils;
 
 import com.agency.utils.AppConstant;
 import java.io.Serializable;

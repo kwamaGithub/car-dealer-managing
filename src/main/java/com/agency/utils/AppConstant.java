@@ -7,8 +7,12 @@ package com.agency.utils;
 
 /**
  *
- * @author Lenovo
+ * @author kwamaGithub
+ * @Created: 16/03/2022
  */
 public class AppConstant {
-     public static final String SCHEMA_NAME = "manage";
+
+    public static final String SCHEMA_NAME = "manage";
+    public static final String MANAGING_REST_PATH_API = "api/managing";
+    public static String DEFAULT_STATE = "DF";
 }

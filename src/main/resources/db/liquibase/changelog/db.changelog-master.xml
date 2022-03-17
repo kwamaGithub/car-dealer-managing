@@ -17,9 +17,9 @@
             stripComments="true"/>
     </changeSet>
     
-    <include file="db/liquibase/changelog/schema-create" relativeToChangelogFile="false"/>
+    <include file="db/liquibase/changelog/schema-create.xml" relativeToChangelogFile="false"/>
     
-    <changeSet author="liquibase-docs" id="import-data-1.0.0">
+    <changeSet author="liquibase-docs" id="import-data-1.0.1">
         <sqlFile 
             encoding="utf8"
             endDelimiter="\nGO"
