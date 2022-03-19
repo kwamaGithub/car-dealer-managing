@@ -5,8 +5,13 @@
  */
 package com.agency.repository;
 
+import com.agency.DTO.Item;
 import com.agency.entity.Dealer;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -14,5 +19,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Created: 17/03/2022
  */
 public interface DealerRepository extends JpaRepository<Dealer, String>{
+    
+    @Query("SELECT new com.agency.DTO.Item(d) FROM Dealer d")
+    public List<Item> getAllDealer();
+    
+    @Query("SELECT d.tierLimit FROM Dealer d Where d.id=:dealerId")
+    public Optional<Integer> getDealerTierLimit(@Param("dealerId") String dealerId);
+    
+    
+
     
 }

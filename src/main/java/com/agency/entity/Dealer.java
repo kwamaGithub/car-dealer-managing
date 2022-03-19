@@ -32,6 +32,9 @@ public class Dealer implements Serializable {
 
     @Column(name = "name", length = 100,nullable = false)
     private String name;
+    
+    @Column(name = "tier_limit")
+    private Integer tierLimit;
 
     public Dealer() {
     }
@@ -39,6 +42,12 @@ public class Dealer implements Serializable {
     public Dealer(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Dealer(String id, String name, Integer tierLimit) {
+        this.id = id;
+        this.name = name;
+        this.tierLimit = tierLimit;
     }
 
     public String getId() {
@@ -57,10 +66,16 @@ public class Dealer implements Serializable {
         this.name = name;
     }
 
+    public Integer getTierLimit() {
+        return tierLimit;
+    }
+
+    public void setTierLimit(Integer tierLimit) {
+        this.tierLimit = tierLimit;
+    }
+
     @Override
     public String toString() {
-        return "Dealer{" + "id=" + id + ", name=" + name + '}';
+        return "Dealer{" + "id=" + id + ", name=" + name + ", tierLimit=" + tierLimit + '}';
     }
-    
-    
 }

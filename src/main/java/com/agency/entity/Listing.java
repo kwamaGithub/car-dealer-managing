@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 
 /**
  *
@@ -45,8 +46,9 @@ public class Listing implements Serializable {
     @Column(name = "price", nullable = false)
     private BigDecimal price = BigDecimal.ZERO;
 
+    @CreatedDate
     @Column(name = "create_at")
-    private Instant createdAt;
+    private Instant createdAt=Instant.now();
 
     @ManyToOne
     @JoinColumn(name = "state_id", referencedColumnName = "id")
@@ -115,6 +117,5 @@ public class Listing implements Serializable {
     public String toString() {
         return "Listing{" + "id=" + id + ", dealerID=" + dealerID + ", vehicle=" + vehicle + ", price=" + price + ", createdAt=" + createdAt + ", state=" + state + '}';
     }
-    
-    
+
 }

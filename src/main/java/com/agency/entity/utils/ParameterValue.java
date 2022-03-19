@@ -31,6 +31,9 @@ public class ParameterValue implements Serializable {
     @JoinColumn(name = "parameter_code", referencedColumnName = "code")
     private AppParameter parameter;
 
+    @Column(name = "label", length = 100)
+    private String label;
+    
     @Column(name = "value", length = 100)
     private String value;
 
@@ -42,6 +45,14 @@ public class ParameterValue implements Serializable {
         this.parameter = parameter;
         this.value = value;
     }
+
+    public ParameterValue(String id, AppParameter parameter, String label, String value) {
+        this.id = id;
+        this.parameter = parameter;
+        this.label = label;
+        this.value = value;
+    }
+    
 
     public String getId() {
         return id;
@@ -67,6 +78,15 @@ public class ParameterValue implements Serializable {
         this.value = value;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    
     @Override
     public String toString() {
         return "ParameterValue{" + "id=" + id + ", parameter=" + parameter + ", value=" + value + '}';

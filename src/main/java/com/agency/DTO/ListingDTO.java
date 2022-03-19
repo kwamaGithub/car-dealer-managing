@@ -5,8 +5,11 @@
  */
 package com.agency.DTO;
 
+import com.agency.entity.Listing;
 import com.agency.utils.AppConstant;
+import com.sun.istack.NotNull;
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -15,12 +18,20 @@ import java.math.BigDecimal;
  */
 public class ListingDTO {
 
+    DateTimeFormatter FOMATER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
     private String id;
+    @NotNull
     private String dealerId;
+
     private String vehicle;
+    @NotNull
     private BigDecimal price = BigDecimal.ZERO;
+
     private String createdAt;
+    @NotNull
     private String stateCode;
+
     private String stateLabel;
     private boolean disabledUpdate = true;
 
@@ -28,6 +39,16 @@ public class ListingDTO {
         if (this.disabledUpdate) {
             this.stateCode = AppConstant.DEFAULT_STATE;
         }
+    }
+
+    public ListingDTO(Listing listing) {
+        this.id = listing.getId();
+        this.dealerId = listing.getDealerID().getId();
+        this.vehicle = listing.getVehicle();
+        this.createdAt = FOMATER.format(listing.getCreatedAt());
+        this.stateCode = listing.getState().getId();
+        this.stateLabel = listing.getState().getLabel();
+        this.disabledUpdate = false;
     }
 
     public ListingDTO(String id, String dealerId, String vehicle, String createdAt, String stateCode, String stateLabel) {
@@ -105,13 +126,10 @@ public class ListingDTO {
 
     @Override
     public String toString() {
-        return "ListingDTO{" + "id=" + id + ", dealerId=" + dealerId +
-                ", vehicle=" + vehicle + ", price=" + price +
-                ", createdAt=" + createdAt + ", stateCode=" + stateCode + 
-                ", stateLabel=" + stateLabel + ", disabledUpdate=" + disabledUpdate + '}';
+        return "ListingDTO{" + "id=" + id + ", dealerId=" + dealerId
+                + ", vehicle=" + vehicle + ", price=" + price
+                + ", createdAt=" + createdAt + ", stateCode=" + stateCode
+                + ", stateLabel=" + stateLabel + ", disabledUpdate=" + disabledUpdate + '}';
     }
-    
-    
 
-    
 }

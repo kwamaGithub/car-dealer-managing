@@ -93,5 +93,13 @@
                                  referencedTableName="values" referencedTableSchemaName="${schema_name}"/>
     </changeSet>
     <!-- LISTING END-->
+    
+    
+    <!--ADD COLUMN tier_limit IN TABLE DEALER-->
+     <changeSet author="kwamaGithub(generated)" id="ADD-COLUMN-TIERLIMIT001">
+         <addColumn schemaName="${schema_name}" tableName="dealer">
+             <column name="tier_limit" type="INT"/>
+        </addColumn>
+     </changeSet>
 </databaseChangeLog>
 

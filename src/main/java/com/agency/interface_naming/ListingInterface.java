@@ -5,6 +5,10 @@
  */
 package com.agency.interface_naming;
 
+import com.agency.DTO.Item;
+import com.agency.DTO.ListingDTO;
+import java.util.List;
+
 /**
  *
  * @author kwamaGithub
@@ -12,5 +16,13 @@ package com.agency.interface_naming;
  */
 public interface ListingInterface {
     
+    public List<Item> getAllDealer();
+    
+    public ListingDTO createListing(ListingDTO listingDTO);
+    public void updateListing(ListingDTO listingDTO);
+    public List<ListingDTO> getAllListing();
+    public List<ListingDTO> getDealerListingByState(String dealerCode,String stateCode);
+    public List<ListingDTO> getDealerListing(String dealerCode);
+    public ListingDTO publishOrUnpublishListing(String listingId);
     
 }
