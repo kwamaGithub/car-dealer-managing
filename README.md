@@ -62,6 +62,7 @@ Object Return example:
 
 
 
+
 METHOD GET : /api/managing/getDealerListing/{dealerId}/{stateId}
 
 Description: get all listings of a dealer with a given state
@@ -128,7 +129,9 @@ Content-type: application/json
 Description : Update  a listing if exist
 
 Object Return example:
+
 {
+
     "listingEdited": true,
     "listingDTO": {
         "id": "c84e7c82-60fa-4a21-8de4-1d18ad7ee08e",
@@ -140,20 +143,32 @@ Object Return example:
         "stateLabel": "Draft"
     },
     "listingId": "c84e7c82-60fa-4a21-8de4-1d18ad7ee08e"
+    
 }
+
 
 
 METHOD PUT : /api/managing/publishedOrUnpublish
 
-Body (Model): { "id":null,"dealerId":null,
-	"vehicle":null,"price":null,"stateCode":null,
+Body (Model):
+
+{ 
+
+	"id":null,
+	"dealerId":null,
+	"vehicle":null,
+	"price":null,
+	"stateCode":null,
 	"stateLabel":null
-      }
+	
+}
       
 Description : Published ou unPublished a listing
 
 Object Return example:
+
 {
+
     "listingDTO": {
         "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
         "dealerId": "HDAI",
@@ -163,10 +178,11 @@ Object Return example:
         "stateCode": "PBD",
         "stateLabel": "Published"
     }
+    
 }
 
-POSTMAN TESTS
 
+POSTMAN TESTS
 
 GET: Get All Dealer with thier tier limit of published listing (tier limit in field "value")
 
@@ -177,6 +193,7 @@ URL: http://localhost:8095/cardealer-starter/api/managing/getAllDealer
 Result:
 
 {
+
     "dealers": [
     
         {
@@ -208,6 +225,7 @@ Result:
         }
 	
     ]
+    
 }
 
 
@@ -219,18 +237,24 @@ Content-Type : application/json
 URL: http://localhost:8095/cardealer-starter/api/managing/saveListing
 
 ** SEND TO CREATE - default State "Draft": DF
+
+
 {
+
 	"id":null,
 	"dealerId":"HDAI",
 	"vehicle":"Hyundai",
 	"price":4000,
 	"stateCode":"DF",
 	"stateLabel":null
+	
 }
+
 
 Result after listing created:
 
 {
+
     "listingDTO": {
         "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
         "dealerId": "HDAI",
@@ -240,6 +264,7 @@ Result after listing created:
         "stateCode": "DF",
         "stateLabel": "Draft"
     }
+    
 }
 
 
@@ -253,20 +278,24 @@ URL: http://localhost:8095/cardealer-starter/api/managing/updateListing
 
 
 {
-        "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
+      
+      "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
         "dealerId": "HDAI",
         "vehicle": "Hyundai versus",
         "price": 7800,
         "createdAt": "2022/03/21",
         "stateCode": "DF",
         "stateLabel": "Draft"
+	
 }
 
 
 Result after listing updated
 
 {
-    "listingEdited": true,
+
+   "listingEdited": true,
+   
     "listingDTO": {
         "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
         "dealerId": "HDAI",
@@ -277,6 +306,7 @@ Result after listing updated
         "stateLabel": "Draft"
     },
     "listingId": "045716a2-3570-4e57-aa7d-7fd35748c034"
+   
 }
 
 
@@ -288,6 +318,7 @@ URL: http://localhost:8095/cardealer-starter/api/managing/publishedOrUnpublish
 ** PUT TO PUBLISHED LISTING :
 
 {
+
         "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
         "dealerId": "HDAI",
         "vehicle": "Hyundai versus",
@@ -295,13 +326,17 @@ URL: http://localhost:8095/cardealer-starter/api/managing/publishedOrUnpublish
         "createdAt": "2022/03/21",
         "stateCode": "DF",
         "stateLabel": "Draft"
+	
 }
 
 
 Result after listing published:
 
 {
-    "listingDTO": {
+  
+  
+   "listingDTO": {
+   
         "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
         "dealerId": "HDAI",
         "vehicle": "Hyundai versus",
@@ -309,27 +344,34 @@ Result after listing published:
         "createdAt": "2022/03/21",
         "stateCode": "PBD",
         "stateLabel": "Published"
+	
     }
+    
 }
 
 
 PUT Listing to Unpublished:
 
 {
-        "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
+       
+       "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
         "dealerId": "HDAI",
         "vehicle": "Hyundai versus",
         "price": 7800,
         "createdAt": "2022/03/21",
         "stateCode": "PBD",
         "stateLabel": "Published"
+	
 }
 
 
 Result after listing unpublished
 
+
 {
-    "listingDTO": {
+
+  "listingDTO":  {
+ 
         "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
         "dealerId": "HDAI",
         "vehicle": "Hyundai versus",
@@ -338,6 +380,7 @@ Result after listing unpublished
         "stateCode": "DF",
         "stateLabel": "Draft"
     }
+  
 }
 
 
@@ -345,11 +388,43 @@ GET: get all listings of a dealer ("HDAI") with a given state DF ("Draft")
 
 For do this test we create 3 listings for dealer ("HDAI"):
 
-Listing 1 : {"id":null,"dealerId":"HDAI","vehicle":"Hyundai 01","price":23000,"stateCode":"DF","stateLabel":null}
+Listing 1 : 
 
-Listing 2 : {"id":null,"dealerId":"HDAI","vehicle":"Hyundai 02","price":53000,"stateCode":"DF","stateLabel":null}
+{
 
-Listing 3 : {"id":null,"dealerId":"HDAI","vehicle":"Hyundai 03","price":29000,"stateCode":"DF","stateLabel":null}
+	"id":null,
+	"dealerId":"HDAI",
+	"vehicle":"Hyundai 01",
+	"price":23000,
+	"stateCode":"DF",
+	"stateLabel":null
+}
+
+Listing 2 :
+
+{
+
+	"id":null,
+	"dealerId":"HDAI",
+	"vehicle":"Hyundai 02",
+	"price":53000,
+	"stateCode":"DF",
+	"stateLabel":null
+	
+}
+
+Listing 3 : 
+
+{
+
+	"id":null,
+	"dealerId":"HDAI",
+	"vehicle":"Hyundai 03",
+	"price":29000,
+	"stateCode":"DF",
+	"stateLabel":null
+	
+}
 
 
 URL for get dealer listings: http://localhost:8095/cardealer-starter/api/managing/getDealerListing/HDAI/DF
@@ -358,6 +433,7 @@ URL for get dealer listings: http://localhost:8095/cardealer-starter/api/managin
 Result for get dealer listing with a given state:
 
 {
+
     "listings": [
         {
             "id": "045716a2-3570-4e57-aa7d-7fd35748c034",
@@ -396,6 +472,7 @@ Result for get dealer listing with a given state:
             "stateLabel": "Draft"
         }
     ]
+    
 }
 
 EXCEPTION HANDLER TESTS
@@ -413,20 +490,25 @@ When creating listing, the fields are requiered: dealerId, price is requiered an
 Test creating listing without dealerId:
 
 {
+
             "id": null,
             "dealerId": null,
             "vehicle": "Hyundai 102",
             "price": 1500,
             "stateCode": "DF",
             "stateLabel": null
+	    
 }
 
 
 Handler Response:
+
 {
+
     "statusCode": 400,
     "reasonPhrase": "Dealer is requiered",
     "errors": []
+    
 }
 
 
@@ -434,21 +516,25 @@ Handler Response:
 Test creating listing without price or price equal 0:
 
 {
+
             "id": null,
             "dealerId": "HDAI",
             "vehicle": "Hyundai 102",
             "price": null,
             "stateCode": "DF",
             "stateLabel": null
+	    
 }
 
 
 Handler Response:
 
 {
+
     "statusCode": 400,
     "reasonPhrase": "The vehicle price is requiered",
     "errors": []
+    
 }
 
 
@@ -457,10 +543,12 @@ Another Exception Handler : When creating listing and dealer tier limit is rache
 
 
 "dealer": {
+
             "id": "II",
             "code": null,
             "label": "INFINITI",
             "value": "2"
+	    
 	  }
 
 
@@ -468,14 +556,37 @@ The "INFINITI" dealer can published 2 listings.
 
 let's create 2 listings and publish them. Let's try to make another one:
 
-Listing 1 : {"id": null,"dealerId": "II","vehicle": "INFINITI 01","price": 55000,"stateCode": "DF","stateLabel": null}
+Listing 1 : 
 
-Listing 2 : {"id": null,"dealerId": "II","vehicle": "INFINITI 02","price": 6700,"stateCode": "DF","stateLabel": null}
+{
+
+	"id": null,
+	"dealerId": "II",
+	"vehicle": "INFINITI 01",
+	"price": 55000,
+	"stateCode": "DF",
+	"stateLabel": null
+	
+}
+
+Listing 2 : 
+
+{
+
+	"id": null,
+	"dealerId": "II",
+	"vehicle": "INFINITI 02",
+	"price": 6700,
+	"stateCode": "DF",
+	"stateLabel": null
+	
+}
 
 
 Listing 1 created and published:  
 
 {
+
         "id": "a7b04689-f69f-43ce-a643-44d1ddcbfca2",
         "dealerId": "II",
         "vehicle": "INFINITI 01",
@@ -483,11 +594,13 @@ Listing 1 created and published:
         "createdAt": "2022/03/21",
         "stateCode": "PBD",
         "stateLabel": "Published"
+	
 }
 
 Listing 2 created and published: 
 
 {
+
         "id": "8d5d6180-c334-4f21-89fb-6286c33a415c",
         "dealerId": "II",
         "vehicle": "INFINITI 01",
@@ -495,17 +608,30 @@ Listing 2 created and published:
         "createdAt": "2022/03/21",
         "stateCode": "PBD",
         "stateLabel": "Published"
+	
 }
 
-Let create 3 published: {"id": null,"dealerId": "II","vehicle": "INFINITI 03","price": 4400,"stateCode": "DF","stateLabel": null}
+Let create 3 listing: 
 
+{
+
+	"id": null,
+	"dealerId": "II",
+	"vehicle": "INFINITI 03",
+	"price": 4400,
+	"stateCode": "DF",
+	"stateLabel": null
+	
+}
 
 Handler Exception Response:
 
 {
+
     "statusCode": 400,
     "reasonPhrase": "The tier limit to the dealer is rached. you have a choice to unpublish the oldest listing of a dealer",
     "errors": []
+    
 }
 
 
