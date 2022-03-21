@@ -25,7 +25,7 @@ public interface ParameterValueRepository extends JpaRepository<ParameterValue, 
     public List<Item> getParamterValues(@Param("parameterCode") String parameterCode);
 
     @Query("SELECT p FROM ParameterValue p  "
-            + " WHERE p.parameter.code=:parameterCode AND p.id=:valueCode")
-    public Optional<ParameterValue> getParamterValue(@Param("parameterCode") String parameterCode,
-            @Param("valueCode") String valueCode);
+            + " WHERE p.parameter.code=:parametercode AND p.id=:valuecode")
+    public Optional<ParameterValue> getParamterValue(@Param("parametercode") String parameterCode,
+            @Param("valuecode") String valueCode);
 }

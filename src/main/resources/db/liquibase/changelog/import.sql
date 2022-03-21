@@ -13,8 +13,7 @@
 **/
 INSERT INTO manage.parameters(code, label) 
 values
-('LISTING_STATE','listing possible states'),
-('DEFAULT_TIER_LIMIT','Default Number of published listings a dealer can have online')
+('LISTING_STATE','listing possible states')
 ON CONFLICT (code) DO UPDATE 
 SET label= EXCLUDED.label;
 
@@ -24,8 +23,7 @@ SET label= EXCLUDED.label;
 INSERT INTO manage.values(id, label,parameter_code,value)
 values 
 ('DF','Draft','LISTING_STATE','DFT'),
-('PBD','Published','LISTING_STATE','PBHD'),
-('TL','Default Tier limit','DEFAULT_TIER_LIMIT','5')
+('PBD','Published','LISTING_STATE','PBHD')
 ON CONFLICT (id) DO UPDATE 
 SET label= EXCLUDED.label,
 parameter_code=EXCLUDED.parameter_code,
@@ -37,7 +35,7 @@ value=EXCLUDED.value;
 **/
 INSERT INTO manage.dealer(id, name,tier_limit)
 values 
-('HDAI','Hyundai',NULL),
+('HDAI','Hyundai',4),
 ('HD','Honda',10),
 ('GC','GMC',0),
 ('II','INFINITI',2)

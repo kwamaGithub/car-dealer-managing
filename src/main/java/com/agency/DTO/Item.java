@@ -38,6 +38,7 @@ public class Item {
     public Item(Dealer dealer) {
         this.id = dealer.getId();
         this.label = dealer.getName();
+        this.value= dealer.getTierLimit().toString();
     }
 
     public Item(ParameterValue pValue) {
@@ -81,6 +82,8 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" + "id=" + id + ", code=" + code + ", label=" + label + ", value=" + value + '}';
+        return "Item{" + "id=" + id + ", label=" + label + ", value=" + value + '}';
     }
+
+    
 }

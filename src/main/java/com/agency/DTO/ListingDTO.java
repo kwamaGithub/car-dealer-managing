@@ -18,8 +18,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class ListingDTO {
 
-    DateTimeFormatter FOMATER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
     private String id;
     @NotNull
     private String dealerId;
@@ -30,30 +28,39 @@ public class ListingDTO {
 
     private String createdAt;
     @NotNull
-    private String stateCode;
+    private String stateCode =AppConstant.DEFAULT_STATE;
 
     private String stateLabel;
-    private boolean disabledUpdate = true;
 
+//    public ListingDTO() {
+//        if (this.disabledUpdate) {
+//            this.stateCode = AppConstant.DEFAULT_STATE;
+//        }
+//    }
     public ListingDTO() {
-        if (this.disabledUpdate) {
-            this.stateCode = AppConstant.DEFAULT_STATE;
-        }
     }
 
     public ListingDTO(Listing listing) {
         this.id = listing.getId();
         this.dealerId = listing.getDealerID().getId();
         this.vehicle = listing.getVehicle();
-        this.createdAt = FOMATER.format(listing.getCreatedAt());
+        this.price= listing.getPrice();
+//        this.createdAt = FOMATER.format(listing.getCreatedAt());
         this.stateCode = listing.getState().getId();
         this.stateLabel = listing.getState().getLabel();
-        this.disabledUpdate = false;
     }
 
-    public ListingDTO(String id, String dealerId, String vehicle,BigDecimal price,
+    public ListingDTO(String id, String dealerId, String vehicle, BigDecimal price,
             String stateCode) {
         this.id = id;
+        this.dealerId = dealerId;
+        this.vehicle = vehicle;
+        this.price = price;
+        this.stateCode = stateCode;
+    }
+
+    public ListingDTO(String dealerId, String vehicle, BigDecimal price,
+            String stateCode) {
         this.dealerId = dealerId;
         this.vehicle = vehicle;
         this.price = price;
@@ -125,20 +132,13 @@ public class ListingDTO {
         this.stateLabel = stateLabel;
     }
 
-    public boolean isDisabledUpdate() {
-        return disabledUpdate;
-    }
-
-    public void setDisabledUpdate(boolean disabledUpdate) {
-        this.disabledUpdate = disabledUpdate;
-    }
 
     @Override
     public String toString() {
         return "ListingDTO{" + "id=" + id + ", dealerId=" + dealerId
                 + ", vehicle=" + vehicle + ", price=" + price
                 + ", createdAt=" + createdAt + ", stateCode=" + stateCode
-                + ", stateLabel=" + stateLabel + ", disabledUpdate=" + disabledUpdate + '}';
+                + ", stateLabel=" + stateLabel + '}';
     }
 
 }

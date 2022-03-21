@@ -15,6 +15,9 @@ import com.agency.repository.ListingRepository;
 import com.agency.repository.ParameterValueRepository;
 import com.agency.utils.AppConstant;
 import java.math.BigDecimal;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,10 @@ public class ManagingService implements ListingInterface {
     @Autowired
     private ParameterValueRepository parameterValueRepository;
 
+    DateTimeFormatter FORMATER = DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZoneId.systemDefault());
+
+    ;
+
     @Override
     public List<Item> getAllDealer() {
         return dealerRepository.getAllDealer();
@@ -59,28 +66,34 @@ public class ManagingService implements ListingInterface {
         listing.setVehicle(listingDTO.getVehicle());
         listing.setPrice(listingDTO.getPrice());
         listing.setState(this.parameterValueRepository.getParamterValue(AppConstant.LISTING_STATE_CODE, AppConstant.DEFAULT_STATE).get());
-        return this.mappedListingToDTO(this.listingRepository.save(listing));
+        listing = this.listingRepository.save(listing);
+        return this.mappedListingToDTO(listing);
     }
+
 
     /**
      * Update a listing
      *
      * @param listingDTO
+     * @return 
      */
     @Override
-    public void updateListing(ListingDTO listingDTO) {
+    public ListingDTO updateListing(ListingDTO listingDTO) {
         this.listingValidationBeforeCreationOrUpdate(listingDTO);
+        Listing listing = new Listing();
         if (listingDTO.getId() != null) {
-            Listing listing = new Listing();
+            listing = this.listingRepository.getById(listingDTO.getId());
             listing.setId(listingDTO.getId());
             listing.setDealerID(this.dealerRepository.getById(listingDTO.getDealerId()));
             listing.setVehicle(listingDTO.getVehicle());
             listing.setPrice(listingDTO.getPrice());
-            listing.setState(this.parameterValueRepository.getParamterValue(AppConstant.LISTING_STATE_CODE, AppConstant.DEFAULT_STATE).get());
-            this.listingRepository.save(listing);
+//            listing.setCreatedAt(FORMATER.format(listing.getCreatedAt()));
+            listing.setState(this.parameterValueRepository.getParamterValue(AppConstant.LISTING_STATE_CODE, listingDTO.getStateCode()).get());
         } else {
             throw new InterneExpection("Listing uuid is requiered", null);
         }
+        return this.mappedListingToDTO(this.listingRepository.
+                save(listing));
     }
 
     /**
@@ -100,17 +113,22 @@ public class ManagingService implements ListingInterface {
      */
     @Override
     public List<ListingDTO> getDealerListingByState(String dealerCode, String stateCode) {
-        return listingRepository.getDealerListingsByDealerAndState(dealerCode, stateCode);
+        List<ListingDTO> listingDTOs = new ArrayList<>();
+        listingRepository.getDealerListingsByDealerAndState(dealerCode, stateCode).stream().forEach(listing -> {
+            listing.setCreatedAt(FORMATER.format(listingRepository.getById(listing.getId()).getCreatedAt()));
+            listingDTOs.add(listing);
+        });
+        return listingDTOs;
     }
 
     /**
      *
-     * @param listingId
+     * @param listingDTO
      * @return
      */
     @Override
-    public ListingDTO publishOrUnpublishListing(String listingId) {
-        Listing listing = this.listingRepository.getById(listingId);
+    public ListingDTO publishOrUnpublishListing(ListingDTO listingDTO) {
+        Listing listing = this.listingRepository.getById(listingDTO.getId());
         if (listing != null) {
             if (listing.getState().getId().equals(AppConstant.DEFAULT_STATE)) {
                 listing.setState(this.parameterValueRepository.getParamterValue(AppConstant.LISTING_STATE_CODE,
@@ -119,6 +137,8 @@ public class ManagingService implements ListingInterface {
                 listing.setState(this.parameterValueRepository.getParamterValue(AppConstant.LISTING_STATE_CODE,
                         AppConstant.DEFAULT_STATE).get());
             }
+        } else {
+            return listingDTO;
         }
         return this.mappedListingToDTO(this.listingRepository.save(listing));
     }
@@ -157,7 +177,16 @@ public class ManagingService implements ListingInterface {
      * @return
      */
     public ListingDTO mappedListingToDTO(Listing l) {
-        return new ListingDTO(l);
+        System.out.println(" LISTING l " + l.toString());
+        ListingDTO listingDTO = new ListingDTO();
+        listingDTO.setId(l.getId());
+        listingDTO.setDealerId(l.getDealerID().getId());
+        listingDTO.setCreatedAt(FORMATER.format(l.getCreatedAt()));
+        listingDTO.setStateCode(l.getState().getId());
+        listingDTO.setStateLabel(l.getState().getLabel());
+        listingDTO.setVehicle(l.getVehicle());
+        listingDTO.setPrice(l.getPrice());
+        return listingDTO;
     }
 
     /**
@@ -171,7 +200,7 @@ public class ManagingService implements ListingInterface {
             throw new InterneExpection("Dealer is requiered", null);
         }
         if (listingDTO.getPrice() == null
-                | listingDTO.getPrice().compareTo(BigDecimal.ZERO) == 0) {
+                | (listingDTO.getPrice() != null && listingDTO.getPrice().compareTo(BigDecimal.ZERO) == 0)) {
             throw new InterneExpection("The vehicle price is requiered", null);
         }
         if (listingDTO.getStateCode() == null) {
@@ -180,15 +209,13 @@ public class ManagingService implements ListingInterface {
 
         //Only Before Listing creation
         if (listingDTO.getId() == null) {
-            if (dealerRepository.getDealerTierLimit(listingDTO.getDealerId()).isPresent()) {
-
+            if (!dealerRepository.getDealerTierLimit(listingDTO.getDealerId()).isPresent()) {
+                throw new InterneExpection("This dealer have not autorization to published listings ", null);
+            } else if (dealerRepository.getDealerTierLimit(listingDTO.getDealerId()).isPresent()) {
                 if (listingRepository.countDealerListingByState(listingDTO.getDealerId(), AppConstant.PUBLISHED_STATE).get().
                         equals(dealerRepository.getDealerTierLimit(listingDTO.getDealerId()).get())) {
-                    throw new InterneExpection("The tier limit to the dealer is rached. you have a choice to unpublis the oldest listing of a dealer", null);
+                    throw new InterneExpection("The tier limit to the dealer is rached. you have a choice to unpublish the oldest listing of a dealer", null);
                 }
-            } else {
-                throw new InterneExpection("This dealer have not autorization to published listings ", null);
-
             }
 
         }

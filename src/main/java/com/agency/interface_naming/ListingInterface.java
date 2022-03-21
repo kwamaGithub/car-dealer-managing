@@ -19,11 +19,11 @@ public interface ListingInterface {
     public List<Item> getAllDealer();
     
     public ListingDTO createListing(ListingDTO listingDTO);
-    public void updateListing(ListingDTO listingDTO);
+    public ListingDTO updateListing(ListingDTO listingDTO);
     public List<ListingDTO> getAllListing();
     public List<ListingDTO> getDealerListingByState(String dealerCode,String stateCode);
     public List<ListingDTO> getDealerListing(String dealerCode);
-    public ListingDTO publishOrUnpublishListing(String listingId);
+    public ListingDTO publishOrUnpublishListing(ListingDTO listingDTO);
     
     public ListingDTO getDealerOldestListing(String dealerId, String stateId);
     

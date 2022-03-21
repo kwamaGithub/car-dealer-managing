@@ -73,6 +73,7 @@ public class ListingRestController {
         this.managingService.updateListing(listingDTO);
         p.put(LISTING_EDITED, true);
         p.put(LISTING_ID, listingDTO.getId());
+        p.put(LISTING_DTO, listingDTO);
         return p;
     }
 
@@ -90,13 +91,13 @@ public class ListingRestController {
 
     /**
      *
-     * @param listingId
+     * @param listingDTO
      * @return
      */
-    @PutMapping(value = "/publishedOrUnpublish/{listingId}")
-    public Object updateListing(@PathVariable("listingId") String listingId) {
+    @PutMapping(value = "/publishedOrUnpublish")
+    public Object publishedOrUnpublish(@RequestBody() ListingDTO listingDTO) {
         Map<String, Object> p = new HashMap<>();
-        p.put(LISTING_DTO, this.managingService.publishOrUnpublishListing(listingId));
+        p.put(LISTING_DTO, this.managingService.publishOrUnpublishListing(listingDTO));
         return p;
     }
 }
