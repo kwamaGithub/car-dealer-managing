@@ -51,6 +51,15 @@ public class ListingDTO {
         this.disabledUpdate = false;
     }
 
+    public ListingDTO(String id, String dealerId, String vehicle,BigDecimal price,
+            String stateCode) {
+        this.id = id;
+        this.dealerId = dealerId;
+        this.vehicle = vehicle;
+        this.price = price;
+        this.stateCode = stateCode;
+    }
+
     public ListingDTO(String id, String dealerId, String vehicle, String createdAt, String stateCode, String stateLabel) {
         this.id = id;
         this.dealerId = dealerId;

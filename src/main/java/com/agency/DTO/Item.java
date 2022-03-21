@@ -29,6 +29,11 @@ public class Item {
         this.label = label;
         this.value = value;
     }
+    public Item(String id, String label, String value) {
+        this.id = id;
+        this.label = label;
+        this.value = value;
+    }
 
     public Item(Dealer dealer) {
         this.id = dealer.getId();

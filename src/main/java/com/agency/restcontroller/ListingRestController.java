@@ -31,6 +31,8 @@ public class ListingRestController {
     private static final String DEALERS = "dealers";
     private static final String LISTINGS = "listings";
     private static final String LISTING_DTO = "listingDTO";
+    private static final String LISTING_EDITED = "listingEdited";
+    private static final String LISTING_ID = "listingId";
 
     @Autowired
     private ManagingService managingService;
@@ -69,8 +71,8 @@ public class ListingRestController {
     public Object updateListing(@RequestBody() ListingDTO listingDTO) {
         Map<String, Object> p = new HashMap<>();
         this.managingService.updateListing(listingDTO);
-        p.put("listingEdited", true);
-        p.put("listingId", listingDTO.getId());
+        p.put(LISTING_EDITED, true);
+        p.put(LISTING_ID, listingDTO.getId());
         return p;
     }
 

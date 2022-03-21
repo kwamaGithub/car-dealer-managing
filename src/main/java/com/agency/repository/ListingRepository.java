@@ -37,8 +37,9 @@ public interface ListingRepository extends JpaRepository<Listing, String> {
             @Param("stateId") String stateId);
 
     @Query("SELECT new com.agency.DTO.ListingDTO(l) FROM Listing l "
-            + " WHERE l.dealerID.id=:dealerId ORDER BY l.createdAt DESC")
-    public List<ListingDTO> getDealerListingsByCreatedDateDescending(@Param("dealerId") String dealerId);
+            + " WHERE l.dealerID.id=:dealerId AND l.state.id=:stateId ORDER BY l.createdAt ASC")
+    public List<ListingDTO> getDealerListingsByCreatedDateAscending(@Param("dealerId") String dealerId,
+            @Param("stateId") String stateId);
 
     @Query("SELECT new com.agency.DTO.ListingDTO(l) FROM Listing l "
             + " WHERE l.state.id=:stateId")

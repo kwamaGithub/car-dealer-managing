@@ -25,4 +25,6 @@ public interface ListingInterface {
     public List<ListingDTO> getDealerListing(String dealerCode);
     public ListingDTO publishOrUnpublishListing(String listingId);
     
+    public ListingDTO getDealerOldestListing(String dealerId, String stateId);
+    
 }

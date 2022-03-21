@@ -135,6 +135,23 @@ public class ManagingService implements ListingInterface {
 
     /**
      *
+     * @param dealerId
+     * @param stateId
+     * @return
+     */
+    @Override
+    public ListingDTO getDealerOldestListing(String dealerId, String stateId) {
+        List<ListingDTO> listingDTOs = this.listingRepository.getDealerListingsByCreatedDateAscending(dealerId,
+                stateId);
+        if (!listingDTOs.isEmpty()) {
+            return listingDTOs.get(0);
+        } else {
+            throw new InterneExpection("This dealer have not listings ", null);
+        }
+    }
+
+    /**
+     *
      *
      * @param l
      * @return
@@ -171,6 +188,7 @@ public class ManagingService implements ListingInterface {
                 }
             } else {
                 throw new InterneExpection("This dealer have not autorization to published listings ", null);
+
             }
 
         }

@@ -40,10 +40,7 @@ values
 ('HDAI','Hyundai',NULL),
 ('HD','Honda',10),
 ('GC','GMC',0),
-('II','INFINITI',20),
-('JR','JAGUAR',5),
-('JP','Jeep',2),
-('NN','NISSAN',NULL)
+('II','INFINITI',2)
 ON CONFLICT (id) DO UPDATE 
 SET name=EXCLUDED.name,
 tier_limit=EXCLUDED.tier_limit;
